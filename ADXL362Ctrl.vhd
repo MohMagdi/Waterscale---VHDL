@@ -164,7 +164,7 @@ constant NUMBYTES_CMD_CONFIG_REG : integer := 3;
 constant NUMBYTES_CMD_READ : integer := 2;
 
 -- Number of bytes to read when reading data from ADXL362
-constant NUMBYTES_READ_DATA : integer := 8;
+constant NUMBYTES_READ_DATA : integer := 8;   
 -- Number of bytes to read when reading status register from ADXL362
 constant NUMBYTES_READ_STATUS : integer := 1;
 
@@ -233,7 +233,7 @@ signal Load_Cnt_Bytes_Sent : STD_LOGIC := '0'; -- controlled by the SPI Transact
 signal Reset_Cnt_Bytes : STD_LOGIC := '0'; -- Controlled by the Main State Machine
                                            -- will reset both the sent and received byte counter
 
--- SPI Transfer Receive Data signals. Reading data will be a 8-byte transfer:
+-- SPI Transfer Receive Data signals. Reading data will be a 8-byte transfer: TODO: CHANGE TO 16-BIT
 -- XACC_H, XACC_L, YACC_H, YACC_L, ZACC_H, ZACC_L, TEMP_H, TEMP_L
 -- therefore an 8X8 shift register is created.
 type data_reg_type is array (0 to (NUMBYTES_READ_DATA - 1)) of STD_LOGIC_VECTOR (7 downto 0);
