@@ -59,8 +59,8 @@ port
  SS         : out STD_LOGIC;
 
 -- Accelerometer data signals
- ACCEL_X_OUT    : out STD_LOGIC_VECTOR (11 downto 0);--8bit before
- ACCEL_Y_OUT    : out STD_LOGIC_VECTOR (11 downto 0);
+ ACCEL_X_OUT    : out STD_LOGIC_VECTOR (8 downto 0);
+ ACCEL_Y_OUT    : out STD_LOGIC_VECTOR (8 downto 0);
  ACCEL_MAG_OUT  : out STD_LOGIC_VECTOR (11 downto 0);
  ACCEL_TMP_OUT  : out STD_LOGIC_VECTOR (11 downto 0)
 
@@ -111,12 +111,16 @@ port
  RESET      : in STD_LOGIC;
  
  -- Accelerometer data input signals
+ ACCEL_X_IN    : in STD_LOGIC_VECTOR (11 downto 0);
  ACCEL_Y_IN    : in STD_LOGIC_VECTOR (11 downto 0);
+ ACCEL_Z_IN    : in STD_LOGIC_VECTOR (11 downto 0);
  Data_Ready    : in STD_LOGIC;
 
  -- Accelerometer data output signals to be sent to the VGA controller
  
- ACCEL_Y_OUT    : out STD_LOGIC_VECTOR (11 downto 0) --was 8bit
+ ACCEL_X_OUT    : out STD_LOGIC_VECTOR (8 downto 0);
+ ACCEL_Y_OUT    : out STD_LOGIC_VECTOR (8 downto 0);
+ ACCEL_MAG_OUT  : out STD_LOGIC_VECTOR (11 downto 0)
 );
 end component;
 
@@ -124,7 +128,9 @@ end component;
 constant ACC_RESET_PERIOD_US : integer := 10;
 constant ACC_RESET_IDLE_CLOCKS   : integer := ((ACC_RESET_PERIOD_US*1000)/(1000000000/SYSCLK_FREQUENCY_HZ));
 
+signal  ACCEL_X    : STD_LOGIC_VECTOR (11 downto 0);
 signal  ACCEL_Y    : STD_LOGIC_VECTOR (11 downto 0);
+signal  ACCEL_Z    : STD_LOGIC_VECTOR (11 downto 0);
 
 signal Data_Ready : STD_LOGIC;
 
@@ -168,7 +174,9 @@ port map
  RESET      => RESET_INT, 
  
  -- Accelerometer data signals
+ ACCEL_X    => ACCEL_X,
  ACCEL_Y    => ACCEL_Y, 
+ ACCEL_Z    => ACCEL_Z,
  ACCEL_TMP  => ACCEL_TMP_OUT, 
  Data_Ready => Data_Ready, 
  
@@ -192,12 +200,16 @@ PORT MAP
  RESET   => RESET_INT,
  
  -- Accelerometer data input signals
+ ACCEL_X_IN => ACCEL_X,
  ACCEL_Y_IN => ACCEL_Y,
+ ACCEL_Z_IN => ACCEL_Z,
  Data_Ready => Data_Ready,
 
  -- Accelerometer data output signals to be sent to the VGA display
- ACCEL_Y_OUT => ACCEL_Y_OUT
- );
+ ACCEL_X_OUT => ACCEL_X_OUT,
+ ACCEL_Y_OUT => ACCEL_Y_OUT,
+ ACCEL_MAG_OUT => ACCEL_MAG_OUT
+);
 
 end Behavioral;
 
